@@ -1,3 +1,7 @@
+;*************
+;By: Teuzero *
+;*************
+
 [BITS 64]
 global WinMain
 
