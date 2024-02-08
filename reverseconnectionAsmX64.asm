@@ -52,10 +52,10 @@ section .rdata
 cmd db "cmd.exe",00h
     
 section .data
-	startupinfoa istruc theProcess   
+    startupinfoa istruc theProcess   
     iend
 	
-	sock_addr istruc sockaddr_in
+    sock_addr istruc sockaddr_in
     iend
 section .text
 WinMain:
