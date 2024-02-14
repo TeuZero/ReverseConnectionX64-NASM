@@ -49,7 +49,7 @@ section .bss
 
 
 section .rdata
-cmd db "cmd.exe",00h
+	cmd db "cmd.exe",00h
     
 section .data
     startupinfoa istruc theProcess   
