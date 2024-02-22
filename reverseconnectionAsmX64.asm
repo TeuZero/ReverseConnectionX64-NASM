@@ -2,6 +2,8 @@
 ;By: Teuzero *
 ;*************
 [BITS 64]
+default rel
+
 global WinMain
 extern WaitForSingleObject
 extern WSAStartup
